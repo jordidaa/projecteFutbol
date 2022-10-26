@@ -1,4 +1,4 @@
-package com.example.projectefutbol;
+package com.example.projectefutbol.model;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ public class Player {
     private LocalDate endOfContract;
     private Team team;
 
-    public Player(int playerID, String name, String surname, int age, FieldPosition fieldPosition, LocalDate endOfContract, Team team) {
+    public Player( String name, String surname, int age, FieldPosition fieldPosition, LocalDate endOfContract, Team team) {
         this.playerID = playerID;
         this.name = name;
         this.surname = surname;
@@ -19,6 +19,9 @@ public class Player {
         this.fieldPosition = fieldPosition;
         this.endOfContract = endOfContract;
         this.team = team;
+    }
+    public Player(){
+
     }
 
     public int getPlayerID() {

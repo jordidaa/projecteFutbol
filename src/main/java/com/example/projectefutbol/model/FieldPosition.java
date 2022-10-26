@@ -1,4 +1,4 @@
-package com.example.projectefutbol;
+package com.example.projectefutbol.model;
 
 public class FieldPosition {
     private int positionId;

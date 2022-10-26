@@ -2,18 +2,29 @@ package com.example.projectefutbol;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.*;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class M7Application extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(M7Application.class.getResource("formJugadors.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 760, 600);
-        stage.setScene(scene);
-        stage.show();
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("formJugadors.fxml"));
+            Scene scene = new Scene(root);
+            stage.setTitle("Projecte Futbol");
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
