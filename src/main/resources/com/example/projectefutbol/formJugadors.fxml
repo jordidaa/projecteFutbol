@@ -117,14 +117,14 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="598.0">
                <children>
-                  <TableView prefHeight="296.0" prefWidth="758.0">
+                  <TableView fx:id="table" prefHeight="296.0" prefWidth="758.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Nom" />
-                      <TableColumn prefWidth="75.0" text="Cognom" />
-                        <TableColumn prefWidth="75.0" text="Edat" />
-                        <TableColumn prefWidth="75.0" text="Posicio al camp" />
-                        <TableColumn prefWidth="75.0" text="Fi Contracte" />
-                        <TableColumn prefWidth="75.0" text="Equip" />
+                      <TableColumn fx:id="tblNom" prefWidth="75.0" text="Nom" />
+                      <TableColumn fx:id="tblCognom" prefWidth="75.0" text="Cognom" />
+                        <TableColumn fx:id="tblEdat" prefWidth="75.0" text="Edat" />
+                        <TableColumn fx:id="tblPosition" prefWidth="75.0" text="Posicio al camp" />
+                        <TableColumn fx:id="tblEndContract" prefWidth="75.0" text="Fi Contracte" />
+                        <TableColumn fx:id="tblTeam" prefWidth="75.0" text="Equip" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

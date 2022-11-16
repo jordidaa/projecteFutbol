@@ -1,28 +1,65 @@
 package com.example.projectefutbol.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Player {
-    private int playerID;
-    private String name;
-    private String surname;
-    private int age;
-    private FieldPosition fieldPosition;
+    private String name,surname,teamStr,posicionStr;
+    private int playerID,age,team,position;
     private LocalDate endOfContract;
-    private Team team;
 
-    public Player( String name, String surname, int age, FieldPosition fieldPosition, LocalDate endOfContract, Team team) {
-        this.playerID = playerID;
+    public Player( String name, String surname, int age, LocalDate endOfContract, int team, int position) {
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.fieldPosition = fieldPosition;
+        this.position = position;
         this.endOfContract = endOfContract;
         this.team = team;
+
     }
     public Player(){
 
     }
+
+    public Player(String name, String surname, String teamStr, String posicionStr, int playerID, int age, LocalDate endOfContract) {
+        this.name = name;
+        this.surname = surname;
+        this.teamStr = teamStr;
+        this.posicionStr = posicionStr;
+        this.playerID = playerID;
+        this.age = age;
+        this.endOfContract = endOfContract;
+    }
+
+    public String getTeamStr() {
+        return teamStr;
+    }
+
+    public void setTeamStr(String teamStr) {
+        this.teamStr = teamStr;
+    }
+
+    public String getPosicionStr() {
+        return posicionStr;
+    }
+
+    public void setPosicionStr(String posicionStr) {
+        this.posicionStr = posicionStr;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+
 
     public int getPlayerID() {
         return playerID;
@@ -56,12 +93,12 @@ public class Player {
         this.age = age;
     }
 
-    public FieldPosition getFieldPosition() {
-        return fieldPosition;
+    public int getFieldPosition() {
+        return position;
     }
 
-    public void setFieldPosition(FieldPosition fieldPosition) {
-        this.fieldPosition = fieldPosition;
+    public void setFieldPosition(int fieldPosition) {
+        this.position = fieldPosition;
     }
 
     public LocalDate getEndOfContract() {
@@ -72,11 +109,46 @@ public class Player {
         this.endOfContract = endOfContract;
     }
 
-    public Team getTeam() {
+    public int getTeam() {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void setTeam(int team) {
         this.team = team;
+    }
+
+    public void savePlayer(Player player){
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("INSERT INTO players set name = '" + player.getName() + "', surname = '" + player.getSurname() + "'" +
+                    ", age = '" + player.getAge() + "' , contract = '" + player.getEndOfContract() + "'" +
+                    ", team = '" + player.getTeam() + "' , position = '" + player.getFieldPosition() + "'");
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public ObservableList<Player> getAllPlayers(){
+        ObservableList<Player> players = FXCollections.observableArrayList();
+        Team team = new Team();
+        FieldPosition position = new FieldPosition();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM players");
+            while (rs.next()){
+
+                Player player = new Player(rs.getString("name"),rs.getString("surname"),team.getTeamName(rs.getInt("team"))
+                        ,position.getStringPosition(rs.getInt("position")),rs.getInt("id"),rs.getInt("age"),rs.getDate("contract").toLocalDate());
+                players.add(player);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return players;
     }
 }

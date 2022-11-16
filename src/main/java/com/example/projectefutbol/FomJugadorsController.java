@@ -3,6 +3,8 @@ package com.example.projectefutbol;
 import com.example.projectefutbol.model.FieldPosition;
 import com.example.projectefutbol.model.Player;
 import com.example.projectefutbol.model.Team;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,9 +22,15 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-import java.util.ArrayList;
 
 public class FomJugadorsController implements Initializable {
+    public TableColumn<Player,String> tblNom;
+    public TableColumn<Player,String> tblCognom;
+    public TableColumn<Player,String> tblEdat;
+    public TableColumn<Player,String> tblPosition;
+    public TableColumn<Player,String> tblEndContract;
+    public TableColumn<Player,String> tblTeam;
+    public TableView<Player> table;
     @FXML
     private Label welcomeText;
     public TextField nameTF;
@@ -29,13 +38,33 @@ public class FomJugadorsController implements Initializable {
     public TextField ageTF;
     public TextField cercaTF;
     public DatePicker contractEndDP;
-    public ComboBox teamCB;
-    public ComboBox positionCB;
+    public ComboBox<String> teamCB;
+    public ComboBox<String> positionCB;
     private Stage stage;
     private Scene scene;
+
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        ObservableList<FieldPosition> positions = FXCollections.observableArrayList();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Team team = new Team();
+        ObservableList<String> teams = team.getTeamsName();
+        this.teamCB.setItems(teams);
+        FieldPosition fieldPosition = new FieldPosition();
+        ObservableList<String> positions = fieldPosition.getPositionsName();
+        this.positionCB.setItems(positions);
+        Player player = new Player();
+        tblNom.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tblCognom.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        tblEdat.setCellValueFactory(new PropertyValueFactory<>("age"));
+        tblPosition.setCellValueFactory(new PropertyValueFactory<>("posicionStr"));
+        tblEndContract.setCellValueFactory(new PropertyValueFactory<>("endOfContract"));
+        tblTeam.setCellValueFactory(new PropertyValueFactory<>("teamStr"));
+        table.setItems(player.getAllPlayers());
+        table.getColumns().addAll(tblNom, tblCognom, tblEdat, tblPosition, tblEndContract, tblTeam);
+
     }
 
     public void saveBTN(ActionEvent actionEvent) throws SQLException {
@@ -45,9 +74,13 @@ public class FomJugadorsController implements Initializable {
         player.setSurname(surnameTF.getText());
         player.setAge(Integer.parseInt(ageTF.getText()));
         player.setEndOfContract(LocalDate.parse(contractEndDP.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate("INSERT INTO players set name = '" + player.getName() + "', surname = '" + player.getSurname() + "'" +
-                ", age = '" + player.getAge() + "' , contract = '" + player.getEndOfContract() + "'");
+        Team team = new Team();
+        player.setTeam(team.getTeamID(teamCB.getValue()));
+        FieldPosition fieldPosition = new FieldPosition();
+        player.setFieldPosition(fieldPosition.getIdPosition(positionCB.getValue()));
+        player.savePlayer(player);
+        refreshTable();
+        clear();
     }
 
     public void updateBTN(ActionEvent actionEvent) {
@@ -75,20 +108,18 @@ public class FomJugadorsController implements Initializable {
     public void butonBTN(ActionEvent actionEvent) {
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    public void refreshTable() {
+        Player player = new Player();
+        table.setItems(player.getAllPlayers());
+    }
+    public void clear() {
+        nameTF.clear();
+        surnameTF.clear();
+        ageTF.clear();
+        contractEndDP.setValue(null);
+        teamCB.setValue(null);
+        positionCB.setValue(null);
     }
 
-    public ArrayList<Team> teams() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM teams");
-        ArrayList<Team> teams = new ArrayList<>();
-        while (rs.next()) {
-            Team team = new Team(rs.getString("team"));
-            teams.add(team);
-        }
-        return teams;
-    }
+
 }
