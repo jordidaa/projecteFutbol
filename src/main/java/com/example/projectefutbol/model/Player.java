@@ -117,13 +117,13 @@ public class Player {
         this.team = team;
     }
 
-    public void savePlayer(Player player){
+    public void savePlayer(){
         try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO players set name = '" + player.getName() + "', surname = '" + player.getSurname() + "'" +
-                    ", age = '" + player.getAge() + "' , contract = '" + player.getEndOfContract() + "'" +
-                    ", team = '" + player.getTeam() + "' , position = '" + player.getFieldPosition() + "'");
+            stmt.executeUpdate("INSERT INTO players set name = '" + getName() + "', surname = '" + getSurname() + "'" +
+                    ", age = '" + getAge() + "' , contract = '" + getEndOfContract() + "'" +
+                    ", team = '" + getTeam() + "' , position = '" + getFieldPosition() + "'");
             conn.close();
 
         }catch (Exception e){
@@ -139,6 +139,53 @@ public class Player {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM players");
+            while (rs.next()){
+
+                Player player = new Player(rs.getString("name"),rs.getString("surname"),team.getTeamName(rs.getInt("team"))
+                        ,position.getStringPosition(rs.getInt("position")),rs.getInt("id"),rs.getInt("age"),rs.getDate("contract").toLocalDate());
+                players.add(player);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return players;
+    }
+    public void deletePlayer(){
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM players WHERE id = " + this.playerID);
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePlayer(){
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("UPDATE players set name = '" + this.getName() + "', surname = '" + this.getSurname() + "'" +
+                    ", age = '" + this.getAge() + "' , contract = '" + this.getEndOfContract() + "'" +
+                    ", team = '" + this.getTeam() + "' , position = '" + this.getFieldPosition() + "' WHERE id = " + this.getPlayerID());
+            conn.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public ObservableList<Player> getAllPlayersBus(String name){
+        ObservableList<Player> players = FXCollections.observableArrayList();
+        Team team = new Team();
+        FieldPosition position = new FieldPosition();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/futbol_projecte", "root", "");
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM players WHERE name LIKE '%"+name+"%' or surname LIKE '%"+name+"%'");
             while (rs.next()){
 
                 Player player = new Player(rs.getString("name"),rs.getString("surname"),team.getTeamName(rs.getInt("team"))

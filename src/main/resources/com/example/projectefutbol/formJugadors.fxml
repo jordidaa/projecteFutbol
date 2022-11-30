@@ -58,11 +58,16 @@
                                  </GridPane.margin>
                               </ImageView>
                               <Label text="Nom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="nameTF">
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="idTF">
                                  <GridPane.margin>
                                     <Insets right="90.0" />
                                  </GridPane.margin>
                               </TextField>
+                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="nameTF">
+                                   <GridPane.margin>
+                                       <Insets right="90.0" />
+                                   </GridPane.margin>
+                               </TextField>
                               <Label text="Cognoms" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="surnameTF">
                                  <GridPane.margin>
@@ -89,10 +94,10 @@
                               </TextField>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                  <children>
-                                    <Button minWidth="70.0" mnemonicParsing="false" text="Guardar" onAction="#saveBTN"/>
-                                    <Button cache="true" disable="true" minWidth="70.0" mnemonicParsing="false" text="Actualitzar" onAction="#updateBTN"/>
-                                    <Button cache="true" disable="true" minWidth="70.0" mnemonicParsing="false" text="Eliminar" onAction="#delateBTN"/>
-                                    <Button minWidth="70.0" mnemonicParsing="false" text="Nou" fx:id="newBTN"/>
+                                    <Button minWidth="70.0" mnemonicParsing="false" text="Guardar" fx:id="btnSave" onAction="#saveBTN"/>
+                                    <Button cache="true" disable="true" minWidth="70.0" mnemonicParsing="false" fx:id="btnUpdate" text="Actualitzar" onAction="#updateBTN"/>
+                                    <Button cache="true" disable="true" minWidth="70.0" mnemonicParsing="false" fx:id="btnDelete" text="Eliminar" onAction="#delateBTN"/>
+                                    <Button minWidth="70.0" mnemonicParsing="false" text="Buscar" onAction="#schareBTN"/>
                                  </children>
                                  <GridPane.margin>
                                     <Insets />
@@ -102,7 +107,7 @@
                                  <children>
                                     <Button minWidth="80.0" mnemonicParsing="false" text="Taula Editable" onAction="#tableEditableBTN"/>
                                     <Button minHeight="-Infinity" minWidth="80.0" mnemonicParsing="false" text="Logs" onAction="#logsBTN"/>
-                                    <Button minWidth="80.0" mnemonicParsing="false" text="Button" onAction="#butonBTN"/>
+                                    <Button minWidth="80.0" mnemonicParsing="false" text="Natejar" onAction="#clearBTN"/>
                                  </children>
                                  <GridPane.margin>
                                     <Insets />
@@ -117,8 +122,9 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="598.0">
                <children>
-                  <TableView fx:id="table" prefHeight="296.0" prefWidth="758.0">
+                  <TableView fx:id="table" prefHeight="296.0" prefWidth="758.0" onMouseClicked="#getSelected" >
                     <columns>
+                        <TableColumn fx:id="tblId" prefWidth="75.0" text="ID" />
                       <TableColumn fx:id="tblNom" prefWidth="75.0" text="Nom" />
                       <TableColumn fx:id="tblCognom" prefWidth="75.0" text="Cognom" />
                         <TableColumn fx:id="tblEdat" prefWidth="75.0" text="Edat" />

@@ -18,6 +18,7 @@ public class M7Application extends Application {
         try{
             Parent root = FXMLLoader.load(getClass().getResource("formJugadors.fxml"));
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
             stage.setTitle("Projecte Futbol");
             stage.setScene(scene);
             stage.initStyle(StageStyle.DECORATED);
