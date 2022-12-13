@@ -1,6 +1,7 @@
 AnchorPane {
     -fx-background-color: #000000;
 }
+
 Button {
     -fx-background-color: #000000;
     -fx-text-fill: #fff;
@@ -12,15 +13,18 @@ Button {
     -fx-background-radius: 10px;
     -fx-padding: 10px;
 }
+
 Button:hover {
     -fx-background-color: #fff;
     -fx-text-fill: #000000;
 }
+
 Label {
     -fx-text-fill: #fff;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
 }
+
 TextField {
     -fx-background-color: #000000;
     -fx-text-fill: #fff;
@@ -32,6 +36,7 @@ TextField {
     -fx-background-radius: 10px;
     -fx-padding: 5px;
 }
+
 ComboBox {
     -fx-background-color: #000000;
     -fx-text-fill: #fff;
@@ -44,11 +49,13 @@ ComboBox {
     -fx-padding: 5px;
     -jfx-focus-color: white;
 }
+
 .combo-box > .list-cell {
--fx-background: black;
--fx-background-color: black;
--fx-text-fill: white;
+    -fx-background: black;
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }
+
 DatePicker {
     -fx-background-color: #000000;
     -fx-text-fill: #fff;
@@ -60,6 +67,7 @@ DatePicker {
     -fx-background-radius: 10px;
     -fx-padding: 5px;
 }
+
 .table-view .column-header,
 .table-view .column-header .filler,
 .table-view .column-header-background .filler {
@@ -73,9 +81,14 @@ DatePicker {
     -fx-font-weight: bold;
 
 }
+
 .table-row-cell:even {
     -fx-background-color: #111;
     -fx-text-fill: #FFF;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
 }
