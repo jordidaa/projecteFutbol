@@ -105,8 +105,6 @@
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                                  <children>
-                                    <Button minWidth="80.0" mnemonicParsing="false" text="Taula Editable" onAction="#tableEditableBTN"/>
-                                    <Button minHeight="-Infinity" minWidth="80.0" mnemonicParsing="false" text="Logs" onAction="#logsBTN"/>
                                     <Button minWidth="80.0" mnemonicParsing="false" text="Natejar" onAction="#clearBTN"/>
                                  </children>
                                  <GridPane.margin>

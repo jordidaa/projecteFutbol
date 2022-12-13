@@ -86,6 +86,11 @@ public class FomJugadorsController implements Initializable {
         FieldPosition fieldPosition = new FieldPosition();
         player.setFieldPosition(fieldPosition.getIdPosition(positionCB.getValue()));
         player.savePlayer();
+        Alert missage = new Alert(Alert.AlertType.INFORMATION);
+        missage.setTitle("El registre s'ha guardat corectament");
+        missage.setContentText("Guardat");
+        missage.setHeaderText("El registre s'ha guardat corectament");
+        missage.show();
         refreshTable();
         clear();
     }
@@ -102,6 +107,11 @@ public class FomJugadorsController implements Initializable {
         FieldPosition fieldPosition = new FieldPosition();
         player.setFieldPosition(fieldPosition.getIdPosition(positionCB.getValue()));
         player.updatePlayer();
+        Alert missage = new Alert(Alert.AlertType.INFORMATION);
+        missage.setTitle("El registre s'ha actualitzat corectament");
+        missage.setContentText("Actualitzat");
+        missage.setHeaderText("El registre s'ha actualitzat corectament");
+        missage.show();
         refreshTable();
         clear();
     }
@@ -111,23 +121,12 @@ public class FomJugadorsController implements Initializable {
         player.setPlayerID(Integer.parseInt(idTF.getText()));
         player.deletePlayer();
         refreshTable();
-        clear();
-    }
-
-    public void tableEditableBTN(ActionEvent actionEvent) {
-    }
-
-    public void logsBTN(ActionEvent actionEvent)throws IOException {
-        Alert missage = new Alert(Alert.AlertType.ERROR);
-        missage.setTitle("El registre no s'ha pogut guardar");
-        missage.setContentText("Fail!");
-        missage.setHeaderText("Resultat");
+        Alert missage = new Alert(Alert.AlertType.INFORMATION);
+        missage.setTitle("El registre s'ha eliminat corectament");
+        missage.setContentText("Eliminat");
+        missage.setHeaderText("El registre s'ha eliminat corectament");
         missage.show();
-        Parent root = FXMLLoader.load(getClass().getResource("logs.fxml"));
-        stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        clear();
     }
 
     public void refreshTable() {
