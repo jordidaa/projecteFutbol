@@ -43,8 +43,6 @@ public class FomJugadorsController implements Initializable {
     public DatePicker contractEndDP;
     public ComboBox<String> teamCB;
     public ComboBox<String> positionCB;
-    private Stage stage;
-    private Scene scene;
     int index = -1;
 
     Player playerP = new Player();
@@ -72,7 +70,6 @@ public class FomJugadorsController implements Initializable {
         tblEndContract.setCellValueFactory(new PropertyValueFactory<>("endOfContract"));
         tblTeam.setCellValueFactory(new PropertyValueFactory<>("teamStr"));
         table.setItems(player.getAllPlayers());
-
     }
 
     public void saveBTN(ActionEvent actionEvent) {
